@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+
+# this path will be used in all the panes of this window
+default-path /home/<%= @node[:user] %>/z/foreman
+
+# it will be always placed to number 1
+window-number 1
+
+# there will be 4 panes
+pane
+
+pane
+# cmd sudo puppet master --verbose --debug --no-daemonize # root has the ruby 2.2 syck issue monkeypatch monkeypatched
+cmd puppet master --verbose --no-daemonize --config /etc/puppet/puppet.conf
+
+pane
+cmd cd /home/<%= @node[:user] %>/z/smart-proxy
+cmd bundle exec bin/smart-proxy
+
+pane
+cmd cd /home/<%= @node[:user] %>/z/foreman
+cmd FOREMAN_TASKS_MONKEYS=true bundle exec rails server
+# cmd RAILS_RELATIVE_URL_ROOT=/foreman FOREMAN_TASKS_MONKEYS=true bundle exec rails server
+# cmd RAILS_RELATIVE_URL_ROOT=/foreman FOREMAN_TASKS_MONKEYS=true passenger start
