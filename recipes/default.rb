@@ -1,3 +1,6 @@
+include_recipe 'projects'
+package 'tmux'
+
 install_path = project_path('tmunix')
 
 github_project 'tmunix' do
@@ -9,6 +12,12 @@ github_project 'tmunix' do
 end
 
 directory "/home/#{node[:user]}/.tmunix" do
+  owner node[:user]
+  group node[:user]
+  mode '0755'
+end
+
+directory "/home/#{node[:user]}/.bin" do
   owner node[:user]
   group node[:user]
   mode '0755'
